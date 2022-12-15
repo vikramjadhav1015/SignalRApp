@@ -1,6 +1,6 @@
 using BlazorServer.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.ResponseCompression;
+using BlazorServer.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+//To make web sever the ability to process octet-stream and add compression to it
+//to make connection very small - for optimization
+builder.Services.AddResponseCompression(options =>
+{ 
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream"});
+});
 
 var app = builder.Build();
 
@@ -26,6 +34,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlazorHub();
+app.MapHub<ChatHub>("/chathub"); //  /chathub is url to connect the server
+
 app.MapFallbackToPage("/_Host");
 
 app.Run();
