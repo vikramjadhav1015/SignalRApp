@@ -16,13 +16,13 @@
         </Grid.RowDefinitions>
 
         <Button x:Name="openConnection" Grid.Row="0" HorizontalAlignment="Center"
-                Padding="20 10" Margin="20">Open Connection</Button>
+                Padding="20 10" Margin="20" Click="openConnection_Click">Open Connection</Button>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
             <TextBox x:Name="messageInput" MinWidth="300" Margin="20"/>
 
-            <Button x:Name="sendMessage" Grid.Row="0" HorizontalAlignment="Center"
-                Padding="20 10" Margin="20">Send Message</Button>
+            <Button x:Name="sendMessage" Grid.Row="0" HorizontalAlignment="Center" IsEnabled="False"
+                Padding="20 10" Margin="20" Click="sendMessage_Click">Send Message</Button>
         </StackPanel>
 
         <ScrollViewer Grid.Row="2" Margin="20" MaxHeight="200" VerticalScrollBarVisibility="Auto">
