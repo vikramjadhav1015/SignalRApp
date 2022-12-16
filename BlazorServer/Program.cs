@@ -35,6 +35,7 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapHub<ChatHub>("/chathub"); //  /chathub is url to connect the server
+app.MapHub<CounterHub>("/counterhub");
 
 app.MapFallbackToPage("/_Host");
 
