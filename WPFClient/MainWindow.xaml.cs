@@ -12,6 +12,7 @@ namespace WPFClient;
 public partial class MainWindow : Window
 {
     HubConnection connection;
+    HubConnection counterConnection;
 
     //constructor
     public MainWindow()
@@ -23,6 +24,11 @@ public partial class MainWindow : Window
             .WithUrl("https://localhost:7266/chathub")
             .WithAutomaticReconnect()
             .Build();
+
+        counterConnection = new HubConnectionBuilder()
+           .WithUrl("https://localhost:7266/counterhub")
+           .WithAutomaticReconnect()
+           .Build();
 
         //Reconnecting Event
         //if connection issue happens
@@ -102,6 +108,31 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         { 
+            messages.Items.Add(ex.Message);
+        }
+    }
+
+    private async void openCounter_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            await counterConnection.StartAsync();
+        }
+        catch (Exception ex)
+        { 
+            messages.Items.Add(ex.Message);
+        }
+    }
+
+    private async void incrementCounter_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            await counterConnection.InvokeAsync("AddToTotal",
+                "WPF Client", 1);
+        }
+        catch(Exception ex)
+        {
             messages.Items.Add(ex.Message);
         }
     }
